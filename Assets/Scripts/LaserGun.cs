@@ -37,8 +37,13 @@ public class LaserGun : MonoBehaviour
 	private Light light;
 
 	//the center point of the crosshair
-	private Camera aimCamera;
 	private Vector3 aimPoint;
+
+	//the Camera used for aiming
+	private Camera aimCamera;
+	
+	//the damage the laser does.
+	private int firepower;
 
 	//---METHODS---//
 
@@ -60,13 +65,15 @@ public class LaserGun : MonoBehaviour
 		//get a reference to the camera for aiming
 		//aimCamera = Camera.main;
 		aimCamera = gameObject.GetComponent<Camera> ();
-
+		
+		//set the firepower of the ship
+		firepower = GameObject.Find("Ship").GetComponent<Ship>().shipFirePower;
+		
 		//get rid of the cursor
-		Screen.showCursor = false;
+		Screen.lockCursor = true;
 
 		//turn on the line renderer
 		Off();
-		
 
 	}//end start
 	
@@ -101,7 +108,9 @@ public class LaserGun : MonoBehaviour
 	void OnGUI()
 	{
 		
-		Aim();
+		//Aim(); disabled until debugged
+		//draw the crosshair - when aim is working this can be removed
+		CenterCrossHair();
 		
 	}//endOnGui
 
@@ -120,13 +129,10 @@ public class LaserGun : MonoBehaviour
 		while(Input.GetButton("Fire1"))
 		{
 			
-			//announce the lase is being fired
-			Debug.Log("Firing");	
-
 			//make the laser rotate
 			line.renderer.material.mainTextureOffset = new Vector2(0, Time.time);		
 
-			//Make a ray starting and current position and aiming at aimpoint
+			//Make a ray starting and current position and aiming forward. Once the Aim function works this can be changed to aim at aimPoint
 			Ray ray = new Ray(transform.position, transform.forward);
 			RaycastHit hit;			
 
@@ -141,13 +147,13 @@ public class LaserGun : MonoBehaviour
 				line.SetPosition(1, hit.point);
 				
 				//apply damage to the hit
-				if(hit.rigidbody)
+				if(hit.collider.GetComponent<DebrisObject>())
 				{
-
-					hit.rigidbody.AddForceAtPosition(transform.forward * 5, hit.point);
-	
-				}
 			
+					hit.collider.GetComponent<DebrisObject>().ApplyDamage(firepower);
+		
+				}			
+
 			}
 			//if line does not hit something make the end simply 100 units out
 			else
@@ -198,13 +204,13 @@ public class LaserGun : MonoBehaviour
 	}//end on
 	
 	// Aim
-	// Points the laser towards the mouse coordinates, coordinates the crosshair with mouse coordinates
+	// Coordinates the crosshair on the screen ***Extremely Bugged Needs work to be usable***
 	// No parameters
 	// No returns
 	// No side effects
 	void Aim()
 	{
-
+		
 		//Set the point being aimed at
 		//aimPoint = new Vector3(Input.mousePosition.x, Input.mousePosition.y, range);
 		aimPoint = aimCamera.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, range));		
@@ -217,5 +223,26 @@ public class LaserGun : MonoBehaviour
 		GUI.DrawTexture(new Rect(x, y, crosshair.width, crosshair.height), crosshair);
 
 	}//End Aim
+
+	// CenterCrossHair
+	// Draws the CrossHair on the center of the screen. Being used until AIM() can be Straightened out.
+	// No parameters
+	// No returns
+	// No side effects
+	void CenterCrossHair()
+	{
+	
+		//Find the center point of the screen
+		float centerHorizontal = Screen.width / 2;
+		float centerVertical = Screen.height / 2; 
+		
+		//adjust the center points for the width of the cross hair
+		centerHorizontal -= crosshair.width / 2;
+		centerVertical -= crosshair.height / 2;
+		
+		//Draw the Crosshair.
+		GUI.DrawTexture(new Rect(centerHorizontal, centerVertical, crosshair.width, crosshair.height), crosshair);	
+
+	}// end CenterCrossHair
 	
 }//end LaserGun

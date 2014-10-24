@@ -8,7 +8,7 @@ requires GameState
 Applied to the players ship
 */
 
-//Enviornment declarations (Unity3D IDE
+//Enviornment declarations (Unity3D IDE)
 using UnityEngine;
 using System.Collections;
 
@@ -41,6 +41,9 @@ public class Ship : MonoBehaviour
 	//how much damage the ship does with its gun
 	public int shipFirePower;
 
+	//use acceleration or always use top speed.
+	public bool useAcceleration = false;
+
 		//---Private---//
 
 	//Reference to the Character controller
@@ -51,7 +54,7 @@ public class Ship : MonoBehaviour
 	
 	//---METHODS---//
 	
-	//Start a constructor but unity is dumb and calls it start
+	//Start basically a constructor
 	//sets the ship health according and speed according to the type of ship it is
 	//no parameters
 	//no returns
@@ -69,7 +72,7 @@ public class Ship : MonoBehaviour
 				maxHealth = 80;
 				armorModifier = 1.0f;
 				maxMoveSpeed = 140;
-				shipFirePower = 80;
+				shipFirePower = 15;
 				break;
 				
 			case "tank":
@@ -77,7 +80,7 @@ public class Ship : MonoBehaviour
 				maxHealth = 150;
 				armorModifier = 0.5f;
 				maxMoveSpeed = 50;
-				shipFirePower = 150;
+				shipFirePower = 50;
 				break;
 				
 			case "superiority":
@@ -85,20 +88,27 @@ public class Ship : MonoBehaviour
 				maxHealth = 110;
 				armorModifier = 0.7f;
 				maxMoveSpeed = 110;
-				shipFirePower = 110;
+				shipFirePower = 25;
 				break;
 			
 		}//end switch
 
 		//set the ships health
-		actualHealth = maxHealth;
-		
+		actualHealth = maxHealth;		
+
 		//set the characterController Reference
 		controller = GetComponent<CharacterController>();
 
+		if(!useAcceleration)
+		{
+		
+			moveSpeed = maxMoveSpeed;
+
+		}
+
 	}//end start
 	
-	//FixedUpdate
+	//Update
 	//Called every physics frame.
 	//No parameters
 	//No returns
@@ -116,20 +126,26 @@ public class Ship : MonoBehaviour
 	//no returns
 	void Move()
 	{
-		//if getting input and not at max speed yet, increase the speed(accelerate)
-		if((Input.GetAxis("Vertical") != 0) && (moveSpeed < maxMoveSpeed))
+
+		//test if acceleration is enabled, if yes implement acceleration		
+		if(useAcceleration)
 		{
+			//if getting input and not at max speed yet, increase the speed(accelerate)
+			if((Input.GetAxis("Vertical") != 0) && (moveSpeed < maxMoveSpeed))
+			{
+	
+				moveSpeed += 0.3f;			
+	
+			}
+			//If not moving reset accelleration 
+			else if (Input.GetAxis("Vertical") == 0) 
+			{
+			
+				moveSpeed = 0;
+	
+			}
 
-			moveSpeed += 0.3f;			
-
-		}
-		//If not moving reset accelleration 
-		else if (Input.GetAxis("Vertical") == 0) 
-		{
-		
-			moveSpeed = 0;
-
-		}
+		}//end useAcceleration test
 
 		//set the ship to rotate according the keyboard and mouse input.
 		transform.Rotate(Input.GetAxis("Mouse Y")*-1, Input.GetAxis ("Mouse X"), Input.GetAxis("Horizontal")*-1);
@@ -152,7 +168,7 @@ public class Ship : MonoBehaviour
 	void OnCollisionEnter(Collision collision)
 	{
 		
-		Debug.Log ("Applying 5 Damage");
+		Debug.Log ("Applying 5 Damage to " + this.name);
 		ApplyDamage(5);
 		
 	}//end OnColliderEnter	
@@ -172,7 +188,7 @@ public class Ship : MonoBehaviour
 
 	//DeductHealth
 	//Deducts Health from the player, if health is below zero calls GameLost()
-	//no parameters
+	//Takes the amount of health to deduct as a parameter
 	//no returns
 	void DeductHealth(int amount) 
 	{
