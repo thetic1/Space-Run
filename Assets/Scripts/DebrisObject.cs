@@ -70,6 +70,8 @@ public class DebrisObject : MonoBehaviour
 
 		}
 
+		moveDirection = new Vector3(0f, -200f,0f);
+
 	}//end Start
 	
 	//Called every physics frame.
@@ -122,7 +124,9 @@ public class DebrisObject : MonoBehaviour
 	void Move()
 	{
 
-		//test if acceleration is enabled, if yes implement acceleration		
+		transform.position = Vector3.Lerp(transform.position, moveDirection, Time.deltaTime * moveSpeed);
+		
+		/*//test if acceleration is enabled, if yes implement acceleration		
 		if(useAcceleration)
 		{
 			//if getting input and not at max speed yet, increase the speed(accelerate)
@@ -134,14 +138,14 @@ public class DebrisObject : MonoBehaviour
 			}
 
 		}//end useAcceleration test
-		
+
 		//Move forward
-		moveDirection = transform.forward;
-		moveDirection = transform.TransformDirection(moveDirection);
-		moveDirection *= moveSpeed;
+		//moveDirection = transform.forward;
+		//moveDirection = transform.TransformDirection(moveDirection);
+		//moveDirection *= moveSpeed;
 		
 		//Make the controller move
-		controller.Move(moveDirection * Time.deltaTime);
+		//controller.Move(moveDirection * Time.deltaTime);*/
 
 	}//end Move
 
