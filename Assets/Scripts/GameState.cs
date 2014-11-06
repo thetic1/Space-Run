@@ -19,33 +19,14 @@ using System.Collections;
 public class GameState : MonoBehaviour 
 {
 
+	//determines if the player is allowed to control the ship
+	static public bool allowPlayerControl = true;
+
 	//basic game state data names hopefuly self explanatory
 	static public int points = 0;
 	static public bool hasWon = false;
 	static public bool hasLost = false;
 	static public string shipType = "interceptor"; //{interceptor, tank, superiority};
-
-	//Start, a constructor but unity is dumb and calls it start
-	//sets the ship health according and speed according to the type of ship it is
-	//no parameters
-	//no returns
-	void Start () 
-	{
-
-		//sets the ship type
-
-	}//end start
-	
-	// Update
-	// Called once per frame, checks game conditions and decides if the game is won or lost
-	// No parameters
-	// No returns
-	// No side effects
-	void Update () 
-	{
-
-
-	}//end update
 
 	//AddPoints
 	//Increases Health of the player up to the maximum allowed amount

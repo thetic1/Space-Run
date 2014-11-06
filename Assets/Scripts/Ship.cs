@@ -127,37 +127,41 @@ public class Ship : MonoBehaviour
 	void Move()
 	{
 
-		//test if acceleration is enabled, if yes implement acceleration		
-		if(useAcceleration)
+		if(GameState.allowPlayerControl)
 		{
-			//if getting input and not at max speed yet, increase the speed(accelerate)
-			if((Input.GetAxis("Vertical") != 0) && (moveSpeed < maxMoveSpeed))
+			//test if acceleration is enabled, if yes implement acceleration		
+			if(useAcceleration)
 			{
-	
-				moveSpeed += 0.3f;			
-	
-			}
-			//If not moving reset accelleration 
-			else if (Input.GetAxis("Vertical") == 0) 
-			{
-			
-				moveSpeed = 0;
-	
-			}
+				//if getting input and not at max speed yet, increase the speed(accelerate)
+				if((Input.GetAxis("Vertical") != 0) && (moveSpeed < maxMoveSpeed))
+				{
+		
+					moveSpeed += 0.3f;			
+		
+				}
+				//If not moving reset accelleration 
+				else if (Input.GetAxis("Vertical") == 0) 
+				{
+				
+					moveSpeed = 0;
+		
+				}
 
-		}//end useAcceleration test
+			}//end useAcceleration test
 
-		//set the ship to rotate according the keyboard and mouse input.
-		transform.Rotate(Input.GetAxis("Mouse Y")*-1, Input.GetAxis ("Mouse X"), Input.GetAxis("Horizontal")*-1);
+			//set the ship to rotate according the keyboard and mouse input.
+			transform.Rotate(Input.GetAxis("Mouse Y")*-1, Input.GetAxis ("Mouse X"), Input.GetAxis("Horizontal")*-1);
 
-		//Move forward on keyboard input
-		moveDirection = new Vector3(0, 0, Input.GetAxis("Vertical"));
-		moveDirection = transform.TransformDirection(moveDirection);
-		moveDirection *= moveSpeed;
+			//Move forward on keyboard input
+			moveDirection = new Vector3(0, 0, Input.GetAxis("Vertical"));
+			moveDirection = transform.TransformDirection(moveDirection);
+			moveDirection *= moveSpeed;
 
-		//Get a reference to the character controller component
-		 
-		controller.Move(moveDirection * Time.deltaTime);
+			//Get a reference to the character controller component
+			 
+			controller.Move(moveDirection * Time.deltaTime);
+
+		}//end check for allowPlayerControl
 
 	}//end Move
 	
@@ -201,8 +205,9 @@ public class Ship : MonoBehaviour
 		//if health is below 0 end the game
 		if (actualHealth <= 0)
 		{
-			
-			GameState.GameLost();
+
+			Die();
+
 			
 		}
 		
@@ -228,6 +233,20 @@ public class Ship : MonoBehaviour
 			
 			actualHealth += amount;
 		}
+		
+	}//End IncreaseHealth
+
+	//Die
+	//plays the death animation, deletes the object, changes gamestate to lost
+	//no parameters
+	//no returns
+	public void Die() 
+	{
+		GameState.allowPlayerControl = false;
+
+		Destroy(gameObject);
+
+		GameState.GameLost();
 		
 	}//End IncreaseHealth
 
