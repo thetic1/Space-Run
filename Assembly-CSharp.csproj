@@ -5,7 +5,7 @@
 	<Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
 	<ProductVersion>10.0.20506</ProductVersion>
 	<SchemaVersion>2.0</SchemaVersion>
-	<ProjectGuid>{6BCFD9D4-4E21-EA89-E38C-126B6146FCBC}</ProjectGuid>
+	<ProjectGuid>{5A536CA3-D245-4D5D-2931-ED9095EA5FA0}</ProjectGuid>
 	<OutputType>Library</OutputType>
 	<AppDesignerFolder>Properties</AppDesignerFolder>
 	<RootNamespace></RootNamespace>
@@ -54,6 +54,8 @@
      <Compile Include="Assets\Scripts\FlyThroughRing.cs" />
      <Compile Include="Assets\Scripts\GameState.cs" />
      <Compile Include="Assets\Scripts\LaserGun.cs" />
+     <Compile Include="Assets\Scripts\Launch.cs" />
+     <Compile Include="Assets\Scripts\LevelStart.cs" />
      <Compile Include="Assets\Scripts\Ship.cs" />
      <Compile Include="Assets\Scripts\UnityCameraFollow.cs" />
   </ItemGroup>

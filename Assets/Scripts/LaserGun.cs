@@ -85,8 +85,8 @@ public class LaserGun : MonoBehaviour
 	void Update () 
 	{
 
-		//if fire button is pressed fire the gun
-		if(Input.GetButtonDown("Fire1"))
+		//if fire button is pressed and playercontrol is allowed, fire the laser 
+		if(Input.GetButtonDown("Fire1") && GameState.allowPlayerControl)
 		{
 
 			//As a fail safe stop the Coroutine if its already going
@@ -107,10 +107,16 @@ public class LaserGun : MonoBehaviour
 	// No side effects
 	void OnGUI()
 	{
-		
-		//Aim(); disabled until debugged
-		//draw the crosshair - when aim is working this can be removed
-		CenterCrossHair();
+
+		//if fire button is pressed and playercontrol is allowed, fire the laser 
+		if (GameState.allowPlayerControl) 
+		{
+
+			//Aim(); disabled until debugged
+			//draw the crosshair - when aim is working this can be removed
+			CenterCrossHair ();
+
+		}//end check for player control
 		
 	}//endOnGui
 

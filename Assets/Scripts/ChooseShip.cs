@@ -22,8 +22,13 @@ public class ChooseShip : MonoBehaviour
 	//---PROPERTIES---//
 
 	//---Public--//
-	//holds the ship type that this button uses.
-	public Object shipType;
+	//holds the prefab that this button instantiates.
+	public Object shipPrefab;
+
+	//The type of the ship, can only be interceptor, tank, superiority.
+	public GameState.shipTypes shipType;
+
+	//the speed at which the ship spins.
 	public float spinSpeed = 2.0f;
 
 	//---Private---//
@@ -50,14 +55,10 @@ public class ChooseShip : MonoBehaviour
 		}
 		
 		//make new ship
-		currentShip = Instantiate(shipType);
-
-		//start rotation on new ship.
+		currentShip = Instantiate(shipPrefab);
 		newShip = GameObject.Find (currentShip.name);
 
-		//set the ship type in gamestate
-		GameState.shipType = shipType.name;
-		
+		GameState.shipType = shipType; 
 		
 	}//end OnMouseDown
 
