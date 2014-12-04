@@ -3,7 +3,7 @@ File: LevelStart.cs
 Author: Braydon Powell
 Date: November 21 2014
 
-instatiates the ship prefab onto the level, must be first in the execution order.
+Instantiates the ship prefab onto the level, must be first in the execution order.
 
 Applied to an empty game object.
 */
@@ -22,6 +22,7 @@ public class LevelStart : MonoBehaviour
 	//---PROPTERTIES---//
 
 	//---Public---/
+	//the ship prefabs
 	public Object tankPrefab;
 	public Object superiorityPrefab;
 	public Object interceptorPrefab;
@@ -34,27 +35,35 @@ public class LevelStart : MonoBehaviour
 	//no side effects
 	void Awake()
 	{
-		
+	
+		//set the time in gamestate
+		GameState.startTime = Time.time;
+
+		GameObject ship = new GameObject();	
+
 		//switch loads the type of ship in gamestate
 		switch (GameState.shipType) 
 		{
 			
 			//Tank
 			case GameState.shipTypes.tank:
-				Instantiate(tankPrefab);
+				ship = Instantiate(tankPrefab) as GameObject;
 				break;
 				
 			//Superiority
 			case GameState.shipTypes.superiority:
-				Instantiate(superiorityPrefab);
+				ship = Instantiate(superiorityPrefab) as GameObject;
 				break;
 				
 			//Interceptor
 			case GameState.shipTypes.interceptor:
-			Instantiate(interceptorPrefab);
+				ship = Instantiate(interceptorPrefab) as GameObject;
 				break;
 			
 		}//end switch 
+
+		//give gamestate a reference to the ship
+		GameState.ship = ship.gameObject;
 		
 	}//end Awake
 	

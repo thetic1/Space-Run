@@ -67,7 +67,7 @@ public class LaserGun : MonoBehaviour
 		aimCamera = gameObject.GetComponent<Camera> ();
 		
 		//set the firepower of the ship
-		firepower = GameObject.Find("Ship").GetComponent<Ship>().shipFirePower;
+		firepower = GameState.ship.GetComponent<Ship>().shipFirePower;
 		
 		//get rid of the cursor
 		Screen.lockCursor = true;

@@ -4,7 +4,7 @@ Author: Braydon Powell
 Date: October 5 2014
 Holds the general state of the game and player. Ship health, points, win or lost also contains methods for changing the game state.
 requires no other files
-Applied to the players ship.
+Not applied to a game object.
 */
 
 //Enviornment declarations (Unity3D IDE)
@@ -24,7 +24,10 @@ public class GameState : MonoBehaviour
 
 	//The type of ship the player is flying
 	public enum shipTypes {tank, superiority, interceptor};
-	static public shipTypes shipType;
+	static public shipTypes shipType = shipTypes.superiority;
+
+	//a reference to the ship object the player is flying. Should be set by LevelStart.cs
+	static public GameObject ship;
 
 	//determines if the player is allowed to control the ship
 	static public bool allowPlayerControl = true;
@@ -33,6 +36,9 @@ public class GameState : MonoBehaviour
 	static public int points = 0;
 	static public bool hasWon = false;
 	static public bool hasLost = false;
+
+	//time since the last level started.
+	static public float startTime;
 	
 	//---METHODS---//
 

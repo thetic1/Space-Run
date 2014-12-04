@@ -4,7 +4,7 @@ Author: Braydon Powell
 Date: Ocotober 5 2014
 
 Holds the Collision Class, which handles collision events.
-requires Ship which in turn requires GameState
+requires Ship.cs and GameState.cs
 Applied to the rings, or any objects that needs to inflict damage on the players ship
 */
 
@@ -26,8 +26,8 @@ public class CollisionHandler : MonoBehaviour {
 	public int damageToApply = 5;
 	
 	//--Private--//
-	//Used to access and Modify the ships health
-	private GameObject ship;
+	//reference to the script used to access and Modify the ships health
+	private Ship shipScript;
 	
 	//Start, a constructor but unity is dumb and calls it start
 	//sets gameState
@@ -36,8 +36,8 @@ public class CollisionHandler : MonoBehaviour {
 	void Start()
 	{
 		
-		//GameState is on the ship
-		ship = GameObject.Find("Ship");
+		//Get the ship script attached to the ship
+		shipScript = GameState.ship.GetComponent<Ship>();
 				
 	}//end start
 	
@@ -48,7 +48,7 @@ public class CollisionHandler : MonoBehaviour {
 	void OnCollisionEnter(Collision collision)
 	{
 		
-		ship.GetComponent<Ship>().ApplyDamage(5);
+		shipScript.ApplyDamage(5);
 		Debug.Log ("Applied 5 Damage");
 		
 	}//end OnCollisionEnter
