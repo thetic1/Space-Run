@@ -19,25 +19,17 @@ using System.Collections;
 public class FlyThroughRing : MonoBehaviour 
 {
 
-	//---METHODS---/
-
+	//---PROPERTIES---//
+	
 		//--Public--//
 
 	//number of points that will be added
 	public int pointsToAdd = 5;
-
-		//--Private--//
-
-	//Start, a constructor but unity is dumb and calls it start
-	//sets gamestate
-	//no parameters
-	//no returns
-	void Start()
-	{
-
-
-	}//end start
 	
+		//--Private--//
+	
+	//---METHODS---/
+
 	//On TriggerEnter
 	//When a object hits this object it will add points to game state
 	//takes the object hitting this object as a parameter
