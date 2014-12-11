@@ -34,7 +34,11 @@ public class EndGame : MonoBehaviour
 	void OnTriggerEnter(Collider other)
 	{
 		
+		Screen.lockCursor = false; // Added by Duane Rosenbaum to fix cursor. Cursor was not displaying for end menu.
+
 		Application.LoadLevel("End Scene");
+
+
 		
 	}//End OnTriggerEnter
 	
