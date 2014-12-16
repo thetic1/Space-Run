@@ -29,7 +29,7 @@ public class ChooseShip : MonoBehaviour
 	public GameState.shipTypes shipType;
 
 	//the speed at which the ship spins.
-	public float spinSpeed = 2.0f;
+	public float spinSpeed = 1.0f;
 
 	//---Private---//
 	private GameObject newShip;
