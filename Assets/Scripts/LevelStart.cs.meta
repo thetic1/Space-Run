@@ -2,7 +2,10 @@ fileFormatVersion: 2
 guid: e0aa224dd7e85ec4dbe76f684a6e3a14
 MonoImporter:
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - tankPrefab: {fileID: 100004, guid: 8cb5506178d486447ae289b4288dc751, type: 2}
+  - superiorityPrefab: {fileID: 100006, guid: e85c94e498f43cb418b0f282c18378d9, type: 2}
+  - interceptorPrefab: {instanceID: 0}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

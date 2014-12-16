@@ -29,7 +29,7 @@ public class CollisionHandler : MonoBehaviour {
 	//reference to the script used to access and Modify the ships health
 	private Ship shipScript;
 	
-	//Start, a constructor but unity is dumb and calls it start
+	//Start
 	//sets gameState
 	//no parameters
 	//no returns
@@ -37,7 +37,7 @@ public class CollisionHandler : MonoBehaviour {
 	{
 		
 		//Get the ship script attached to the ship
-		shipScript = GameState.ship.GetComponent<Ship>();
+		//shipScript = GameState.ship.GetComponent<Ship>();
 				
 	}//end start
 	
@@ -48,9 +48,17 @@ public class CollisionHandler : MonoBehaviour {
 	void OnCollisionEnter(Collision collision)
 	{
 		
-		shipScript.ApplyDamage(5);
-		Debug.Log ("Applied 5 Damage");
+		Debug.Log(this.name + " hit " + collision.gameObject.name);
+		//shipScript.ApplyDamage(damageToApply);
 		
 	}//end OnCollisionEnter
-	
+
+	/*void OnCollisionStay(Collision collision)
+	{
+
+		Debug.Log(this.name + " hitting " + collision.gameObject.name);
+		shipScript.ApplyDamage(damageToApply);
+
+	}*/
+
 }//end Collision

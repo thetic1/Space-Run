@@ -34,7 +34,6 @@ public class GameState : MonoBehaviour
 	
 	//basic game state data names hopefuly self explanatory
 	static public int points = 0;
-	static public bool hasWon = false;
 	static public bool hasLost = false;
 
 	//time since the last level started.
@@ -53,25 +52,16 @@ public class GameState : MonoBehaviour
 		
 	}//End AddPoints
 	
-	//GameWon
-	//Called when the game is won, loads win scene
-	//no parameters
-	//no returns
-	static public void GameWon() 
-	{
-		
-		hasWon = true;
-		
-	}//End GameWon
-	
 	//GameLost
 	//Called when the game is lost, loads game over scene
 	//no parameters
 	//no returns
 	static public void GameLost() 
 	{
-		
+	
 		hasLost = true;
+		Screen.lockCursor = false;
+		Application.LoadLevel("End Scene");
 		
 	}//End GameLost
 	

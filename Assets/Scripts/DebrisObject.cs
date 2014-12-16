@@ -32,25 +32,16 @@ public class DebrisObject : MonoBehaviour
 	//the speed to spin
 	public float spinSpeed = 1.0f;		
 
-	//the speed at which the ship will move when done accellerating
-	public int maxMoveSpeed = 50;
-	
-	//the actual speed the ship is currently moving at
+	//movement speed of the object
 	public float moveSpeed;
 	
 	//the maximum health points of the ship
 	public int health = 50;
 	
-	//use acceleration or always use top speed.
-	public bool useAcceleration = false;
-
 	//---Private---//
 	
-	//Reference to the Character controller
-	private CharacterController controller;
-	
-	//Vector object that provides input to the character controller component
-	private Vector3 moveDirection;
+	//Vector for the destination if moving
+	private Vector3 currentDestination;
 	
 	//---METHODS---/
 
@@ -61,16 +52,7 @@ public class DebrisObject : MonoBehaviour
 	void Start () 
 	{
 
-		controller = GetComponent<CharacterController>();
-
-		if(!useAcceleration)
-		{
-
-			moveSpeed = maxMoveSpeed;
-
-		}
-
-		moveDirection = new Vector3(0f, -200f,0f);
+		currentDestination = RandomPointGenerator();
 
 	}//end Start
 	
@@ -117,36 +99,27 @@ public class DebrisObject : MonoBehaviour
 
 	}//end Spin
 
-	//Move
-	//Moves the debris Called by Update
-	//no parameters
-	//no returns
+	//function Move
+	//Moves the object through the scene
+	//No parameters
+	//No returns
+	//No side effects
 	void Move()
 	{
-
-		transform.position = Vector3.Lerp(transform.position, moveDirection, Time.deltaTime * moveSpeed);
 		
-		/*//test if acceleration is enabled, if yes implement acceleration		
-		if(useAcceleration)
+			
+		//if we have reached within range of our destination move to another
+		if(Vector3.Distance(transform.position, currentDestination ) <= 0.3)
 		{
-			//if getting input and not at max speed yet, increase the speed(accelerate)
-			if(moveSpeed < maxMoveSpeed)
-			{
-				
-				moveSpeed += 0.3f;			
-				
-			}
-
-		}//end useAcceleration test
-
-		//Move forward
-		//moveDirection = transform.forward;
-		//moveDirection = transform.TransformDirection(moveDirection);
-		//moveDirection *= moveSpeed;
+			//make a new currentDestination
+			currentDestination = RandomPointGenerator();
+			
+			Debug.Log("New Destination is " + currentDestination);
+		}
 		
-		//Make the controller move
-		//controller.Move(moveDirection * Time.deltaTime);*/
-
+		//start moving to the destination.
+		transform.position = Vector3.Lerp(transform.position, currentDestination, moveSpeed);
+		
 	}//end Move
 
 	//ApplyDamage
@@ -182,5 +155,23 @@ public class DebrisObject : MonoBehaviour
 		Destroy(gameObject);
 
 	}//end die
+
+	//Function RandomPointGenerator
+	//Generates a Random vector point for the object to fly to
+	//no paramters
+	//no Returns
+	//no side effects
+	static public Vector3 RandomPointGenerator()
+	{
+		
+		//generate a new point
+		float horizontalPoint = Random.Range(-5000, 5000);
+		float verticalPoint = Random.Range(-5000, 5000);
+		float depthPoint = Random.Range(-5000, 5000);
+
+		//return the new vector with the points
+		return new Vector3(horizontalPoint, verticalPoint, depthPoint);
+		
+	}//end RandomPointGenerator
 
 }//end DebrisObject

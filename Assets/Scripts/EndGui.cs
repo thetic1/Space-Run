@@ -20,6 +20,7 @@ public class EndGui : MonoBehaviour {
 	//-PROPERTIES-//
 	
 	//--public-//
+	public GUIText courseStatus;
 
 	public GUIText score;
 	
@@ -30,6 +31,15 @@ public class EndGui : MonoBehaviour {
 	{
 		UpdateScore ();
 		UpdateTime ();
+		
+		//Check for failure
+		if(GameState.hasLost)
+		{
+		
+			courseStatus.text = "Course Failed";		
+	
+		}
+
 	}
 
 	void UpdateScore()

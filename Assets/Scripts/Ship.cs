@@ -41,7 +41,7 @@ public class Ship : MonoBehaviour
 	public int shipFirePower;
 	
 	//use acceleration or always use top speed.
-	public bool useAcceleration = false;
+	public bool useAcceleration = true;
 	
 	//---Private---//
 	
@@ -172,11 +172,23 @@ public class Ship : MonoBehaviour
 	void OnCollisionEnter(Collision collision)
 	{
 		
-		Debug.Log ("Applying 5 Damage to " + this.name);
+		Debug.Log("Ship Hit " + collision.gameObject.name);
 		ApplyDamage(5);
 		
 	}//end OnColliderEnter	
 	
+	//OnCollisionStay
+	//Applies Damage whenever the ship stays collided with something.
+	//Parameter is the object it collided with
+	//No returns
+	void OnCollisionStay(Collision collision)
+	{
+
+		Debug.Log("Ship still Hitting " + collision.gameObject.name);
+		ApplyDamage(1);
+		
+	}//end OnCollisionStay
+
 	//ApplyDamage
 	//Deducts health taking into account the armorModifier
 	//no parameters
