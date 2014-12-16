@@ -44,6 +44,8 @@ public class GameGUI : MonoBehaviour
 	} // end Start
 	
 	// Update is called once per frame
+	// Updates for GUI display
+
 	void Update () 
 	{
 		UpdateHealth ();
